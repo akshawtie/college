@@ -11,25 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         $_SESSION["user"] = $user;
-
-        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-            echo json_encode(["status" => "success"]);
-            exit;
-        } else {
-            header("Location: htmm/MusicSite.html");
-            exit;
-        }
+        echo "success";
     } else {
-        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-            echo json_encode(["status" => "error", "message" => "Invalid username or password!"]);
-            exit;
-        } else {
-            $error_message = "Invalid username or password!";
-        }
+        echo "error";
     }
+    exit;
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -186,23 +174,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
         </div>
-        <script>
+<script>
 document.querySelector("form[method='POST']").addEventListener("submit", async function(e) {
     e.preventDefault();
+
     const formData = new FormData(this);
     const response = await fetch("login.php", {
         method: "POST",
         body: formData,
-        headers: { "X-Requested-With": "XMLHttpRequest" }
+        headers: { "X-Requested-With": "XMLHttpRequest" } // ✅ important
     });
-    const result = await response.json();
-    if (result.status === "success") {
-        window.location.href = "htmm/MusicSite.html";
+
+    const result = await response.text();
+    if (result.trim() === "success") {
+        window.open("htmm/MusicSite.html", "_blank");
+
     } else {
-        document.querySelector(".error").textContent = result.message;
+        document.querySelector(".error").textContent = "Invalid username or password!";
     }
 });
 </script>
+
 
 </body>
 </html>
