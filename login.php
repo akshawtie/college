@@ -203,7 +203,6 @@ document.querySelector("form[method='POST']").addEventListener("submit", async f
     const result = await response.json();
 
     if (result.status === "success") {
-        alert("Login successful!");
         window.location.href = "htmm/MusicSite.html";
     } else {
         document.querySelector(".error").textContent = result.message;
