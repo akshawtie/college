@@ -1,14 +1,4 @@
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 25px;
-  color: #c922d5;
-  
 
-    background-color: rgba(0, 0, 0, 0);
-    padding:0px 0px;
-}
 
 hr{
   height:0.01em;
@@ -25,6 +15,17 @@ hr{
   padding:none;
   margin-bottom:10px;
   
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 25px;
+  color: #c922d5;
+  
+
+    background-color: rgba(0, 0, 0, 0);
+    padding:0px 0px;
 }
 .nav-left a{
   font-size: 2.4em;

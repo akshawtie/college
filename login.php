@@ -11,31 +11,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         $_SESSION["user"] = $user;
-        header("Location: htmm/MusicSite.html");
-        exit();
+
+        // If request came from AJAX, return JSON instead of redirecting
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            echo json_encode(["status" => "success"]);
+            exit;
+        } else {
+            header("Location: htmm/MusicSite.html");
+            exit;
+        }
     } else {
-        $error_message = "Invalid username or password!";
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            echo json_encode(["status" => "error", "message" => "Invalid username or password!"]);
+            exit;
+        } else {
+            $error_message = "Invalid username or password!";
+        }
     }
 }
 ?>
 
+
 <!DOCTYPE html>
+<html lang="en">
 <head>
  
 
 <link rel="stylesheet" href="htmm/musicA1.css">
-    <
-    <link rel="icon" href="r/mikuu.png" type="image/x-icon">
+    <link rel="icon" href="htmm/r/mikuu.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.cdnfonts.com/css/pixelify-sans" rel="stylesheet">
     <title>Spicify - Login</title>
-    </head>
     <style>
         body {
             font-family: 'Pixelify Sans';
             color: #eee;
             height: 100vh;
+            margin-top:3%;
+            background-image: url('bg2.png'); 
+            background-repeat: no-repeat;             
+            background-size: cover;                   
+            background-position: center;              
+            background-attachment: fixed;             
         }
+        body::before {
+  content: "";
+  position: fixed; /* fixed = covers the entire viewport */
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
+  background: url('bg2.png') center/cover no-repeat;
+  filter: blur(10px);        /* 🔹 main blur effect */
+  transform: scale(1);     /* prevents edge clipping */
+  z-index: -1;               /* keeps it behind all content */
+}
         .login-box {
             background: #222;
             font-family: 'Pixelify Sans';
@@ -46,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0px 4px 8px rgba(0,0,0,0.5);
         }
         input {
-            width: 90%;
+            width: 95%;
             font-family: 'Pixelify Sans';
             padding: 10px;
             margin: 8px 0;
@@ -57,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background: #28a745;
             font-family: 'Pixelify Sans';
             color: white;
+            width:50%;
             cursor: pointer;
         }
         input[type="submit"]:hover {
@@ -68,19 +96,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 10px;
         }
         .mainvi{
-            width:100vh;
+            width:100%;
+            height:100%;
             display:flex;
             justify-content:center;
-            align-items:center;
-            padding:10%;
-            padding-left:23%;
+            align-items:center;            /* keeps it fixed when scrolling */
         }
+
+/* kogin box above blur */
+.login-box {
+  position: absolute;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  top:33%;
+  left:40%;
+  border-radius: 10px;
+  color: white;
+  backdrop-filter: blur(4px); /* adds inner blur for frosted-glass look */
+}
+.navbar {
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 25px;
+  color: #c922d5;
+  
+
+    background-color: rgba(0, 0, 0, 0);
+    padding:0px 0px;
+}
+.nav-left a{
+  font-size: 2.4em;
+  text-decoration: none;
+  color:#f1cdf4;
+  font-family: 'Pixelify Sans', sans-serif;
+                                                
+}
+.nav-right a {
+    font-size: 1.5em;
+    text-decoration: none;
+    font-family: 'Pixelify Sans', sans-serif;
+                                                
+  color: #f1cdf4;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
     </style>
 </head>
 <body>
     <div class="navbar">
         <div class="nav-left">
-            <a href="MusicSite.html" class="main_logo"> <img src="r/mikuu.png" class="melody2_img"> Spicify</a>
+            <a href="MusicSite.html" class="main_logo"> <img src="htmm/r/mikuu.png" class="melody2_img"> Spicify</a>
         </div>
                <label class="search-label">
     <input type="text" name="text" class="input" required="" placeholder="Search Your Music...    ">
@@ -119,5 +188,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
         </div>
+        <script>
+document.querySelector("form[method='POST']").addEventListener("submit", async function(e) {
+    e.preventDefault(); // stop the page from reloading
+
+    const formData = new FormData(this);
+
+    const response = await fetch("login.php", {
+        method: "POST",
+        body: formData,
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+    });
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+        alert("Login successful!");
+        window.location.href = "htmm/MusicSite.html";
+    } else {
+        document.querySelector(".error").textContent = result.message;
+    }
+});
+</script>
+
 </body>
 </html>
