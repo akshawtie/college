@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $_SESSION["user"] = $user;
 
-        // If request came from AJAX, return JSON instead of redirecting
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             echo json_encode(["status" => "success"]);
             exit;
@@ -103,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items:center;            /* keeps it fixed when scrolling */
         }
 
-/* kogin box above blur */
+
 .login-box {
   position: absolute;
   z-index: 1;
@@ -113,8 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   left:40%;
   border-radius: 10px;
   color: white;
-  backdrop-filter: blur(4px); /* adds inner blur for frosted-glass look */
-}
+  backdrop-filter: blur(4px); 
 .navbar {
     z-index: 10;
     display: flex;
@@ -190,18 +188,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <script>
 document.querySelector("form[method='POST']").addEventListener("submit", async function(e) {
-    e.preventDefault(); // stop the page from reloading
-
+    e.preventDefault();
     const formData = new FormData(this);
-
     const response = await fetch("login.php", {
         method: "POST",
         body: formData,
         headers: { "X-Requested-With": "XMLHttpRequest" }
     });
-
     const result = await response.json();
-
     if (result.status === "success") {
         window.location.href = "htmm/MusicSite.html";
     } else {
