@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="hotel.css"
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel</title>
+</head>
+<body>
+    <div class="navbar">
+     <div class="navleft">
+        <a href="tempjs2.html"><img src="rdhd.jpg" class="navimg">Hotel California</a>
+     </div>
+   <div class="navright">
+    <a><img src="rdhd.jpg" class="navimg">Book</a>
+    <a><img src="rdhd.jpg" class="navimg">contact us</a>
+   </div>
+    </div>
+    
+    <hr>
+    <div class="box">
+        <div class="boxleft">
+        <div class="room">
+        <img src="r/s4.png" class="boximg">
+        <br>
+        <div class="quantity">
+  <button onclick="decrease()">−</button>
+  <input type="text" id="qty" value="0" readonly>
+  <button onclick="increase()">+</button>
+</div>
+
+
+        </div>
+        <div class="room">
+        <img src="r/s4.png" class="boximg">
+        <div class="quantity">
+  <button onclick="decrease1()">−</button>
+  <input type="text" id="qty1" value="0" readonly>
+  <button onclick="increase1()">+</button>
+</div>
+
+        </div>
+        <div class="room">
+        <img src="r/s4.png" class="boximg">
+        
+        </div></div>
+
+
+       <div class="boxright">
+         <p>Room Type 1:</p>
+                   <div class="form1" id="displayQty1">0</div>
+                   <p>   cost  </p>
+                             <div class="form1" id="displaybill1">0</div>
+
+           
+         </div>
+       </div>
+    </div>
+
+
+    <script>
+  function decrease() {
+    var qty = document.getElementById("qty");
+    var value = parseInt(qty.value);
+    if (value > 1) { 
+      qty.value = value - 1;
+    }
+  }
+
+  function increase() {
+    var qty = document.getElementById("qty");
+    var value = parseInt(qty.value);
+    qty.value = value + 1;
+
+    
+  }
+  function decrease1() {
+    var qty1 = document.getElementById("qty1");
+    var value = parseInt(qty1.value);
+    if (value > 1) { 
+      qty1.value = value - 1;
+    }
+    updateDisplay();
+  }
+
+  function increase1() {
+    var qty1 = document.getElementById("qty1");
+    var value = parseInt(qty1.value);
+    qty1.value = value + 1;
+    updateDisplay();
+
+    
+  }
+  function updateDisplay() {
+  var qty1Value = document.getElementById("qty1").value;
+  var qty1bill = (document.getElementById("qty1").value);
+  document.getElementById("displayQty1").innerHTML = qty1Value;
+   document.getElementById("displaybill1").innerHTML = qty1bill*100;
+}
+</script>
+
+
+ 
+</body>
+</html>

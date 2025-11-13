@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mouse Event Example</title>
+</head>
+<body>
+  <button id="myBtn">Click Me</button>
+
+  <script>
+    // Get the button
+    let btn = document.getElementById("myBtn");
+
+    // Add a click event listener
+    btn.addEventListener("click", function(event) {
+      alert("Mouse clicked!");
+      console.log("Event object:", event); // shows details
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.banner{
+display:flex;
+gap:3em;
+justify-content:center;
+margin-top:5em;
+}
+.subbanners{
+    width:20em;
+    height:40em;
+}

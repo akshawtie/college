@@ -1,0 +1,68 @@
+.navbar{
+display:flex;
+justify-content: space-between;
+background-color: black;
+}
+.navleft a{
+    display:flex;
+    align-items: center;
+font-size: 1.5em;
+color:aliceblue;
+text-decoration: none;
+
+}
+.navimg {
+    height:2em;
+    
+    vertical-align:middle;
+}
+.navright{
+    display:flex;
+    align-items:right;
+
+}
+.navright a{
+     display:flex;
+    align-items: center;
+    color:aliceblue;
+font-size: 1.5em;
+margin-right:0.5em;
+text-decoration: none;
+    
+}
+
+body{
+background-color: black;
+}
+.box{
+    display:flex;
+}
+.boxleft{
+    width:70%;
+    display:flex;
+    justify-content: center;
+    margin:1em;
+    
+}
+.boximg{
+    height:15em;
+    margin:2em;
+}
+.room a{
+    color:aliceblue;
+}
+.form1{
+    color:aliceblue;
+    align-items: normal;
+    margin-top: 15px;
+    height:10px;
+    
+}
+.boxright {
+    color:aliceblue;
+    display: flex;
+    padding:10px;
+    padding-right:150px;
+    background-color: rgba(240, 248, 255, 0.468);
+    gap:1em;
+}

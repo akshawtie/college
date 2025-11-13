@@ -1,0 +1,54 @@
+
+
+.bannertemp {
+    position: relative;
+    display: inline-block;
+    width: 98%;
+    height: 18em;
+    margin: 1em;
+    border-radius: 40px;
+    overflow: hidden;
+    color:#f1cee6;
+}
+
+.banner {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    object-fit: cover;
+    opacity: 70%;
+    display: block;
+}
+
+.profheading {
+    position: absolute;
+    top:80%;
+    left: 0.5em;
+    transform: translateY(-140%);
+    font-size: 6em;
+    font-family: 'Pixelify Sans', sans-serif;
+    color: #f1cee6;
+    opacity: 1; /* Fully visible text */
+    z-index: 2;
+}
+.block1{
+    display:flex;
+    font-size: 1.3em;
+    font-family:'pixelify sans';
+    padding:1.5em;
+    margin-top:-0.4em;
+    padding-right:2em;
+    color: #f1cee6;
+    border-radius: 10%;
+    gap:1em;
+}
+.subleft{
+    background-color: rgba(0, 0, 0, 0.151);
+    width:75%;
+    padding:0.5em;
+    border-radius:5%;
+    border:2px;
+}
+.subright{
+    width:23%;
+}
