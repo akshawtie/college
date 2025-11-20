@@ -9,10 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT * FROM log WHERE user='$user' AND pass='$pass'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+    if ($result->num_rows>0) {
         $_SESSION["user"] = $user;
-        echo "success";
-    } else {
+        echo "success";   
+    } 
+        else {
+    http_response_code(401);
         echo "error";
     }
     exit;
@@ -181,33 +183,45 @@ document.querySelector("form[method='POST']").addEventListener("submit", async f
 
     const formData = new FormData(this);
     try {
-        const response = await fetch("login2.php", {
+        const response = await fetch("login.php", {
             method: "POST",
             body: formData,
             headers: { "X-Requested-With": "XMLHttpRequest" }
         });
         if (!response.ok) 
             {
-            if (response.status === 404) {
-                document.querySelector(".error").textContent = "Login File Not Found (404).";} 
-            else if (response.status === 500) {
-                document.querySelector(".error").textContent = "Server error (500). Try again later.";} 
+            if (response.status===404) {
+                document.querySelector(".error").textContent = "Login File Not Found (404).";
+                } 
+            else if (response.status===500) {
+                document.querySelector(".error").textContent = "Server error (500). Try again later.";
+                } 
+            else if(response.status===401) {
+                 document.querySelector(".error").textContent = "Unauthorized (401). Who Tf Are YOU.";
+                }
+            else if(response.status===400) {
+                 document.querySelector(".error").textContent = "Invalid Request";
+                }
+            else if(response.status===403) {
+                 document.querySelector(".error").textContent = "We Have Blocked You";
+                }
+                     
             else {
-                document.querySelector(".error").textContent = "Unexpected error: " + response.status;}
+                document.querySelector(".error").textContent = "Unexpected error: " +response.status;}
             return; 
         }
 
         const result = await response.text();
 
-        if (result.trim() === "success") {
-            window.open("htmm/MusicSite.html", "_blank");
+        if (result.trim()==="success") {
+        document.querySelector(".error").textContent = "Login successful!";
+            window.open("htmm/MusicSite.html","_blank");
         } else {
-            document.querySelector(".error").textContent = "Invalid username or password!";
+            document.querySelector(".error").textContent="Invalid username or password!";
         }
 
     } catch (err) {
-        document.querySelector(".error").textContent = 
-            "Network error — please check your internet connection!";
+        document.querySelector(".error").textContent= "Network error — please check your internet connection!";
     }
 });
 
