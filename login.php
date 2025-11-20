@@ -161,6 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="mainvi">
     <div class="login-box">
         <h2>Login</h2>
+        <div class="error"></div>
         <?php if (!empty($error_message)) { ?>
             <div class="error"><?php echo $error_message; ?></div>
         <?php } ?>
@@ -179,20 +180,37 @@ document.querySelector("form[method='POST']").addEventListener("submit", async f
     e.preventDefault();
 
     const formData = new FormData(this);
-    const response = await fetch("login.php", {
-        method: "POST",
-        body: formData,
-        headers: { "X-Requested-With": "XMLHttpRequest" } // ✅ important
-    });
+    try {
+        const response = await fetch("login2.php", {
+            method: "POST",
+            body: formData,
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        });
+        if (!response.ok) 
+            {
+            if (response.status === 404) {
+                document.querySelector(".error").textContent = "Login File Not Found (404).";} 
+            else if (response.status === 500) {
+                document.querySelector(".error").textContent = "Server error (500). Try again later.";} 
+            else {
+                document.querySelector(".error").textContent = "Unexpected error: " + response.status;}
+            return; 
+        }
 
-    const result = await response.text();
-    if (result.trim() === "success") {
-        window.open("htmm/MusicSite.html", "_blank");
+        const result = await response.text();
 
-    } else {
-        document.querySelector(".error").textContent = "Invalid username or password!";
+        if (result.trim() === "success") {
+            window.open("htmm/MusicSite.html", "_blank");
+        } else {
+            document.querySelector(".error").textContent = "Invalid username or password!";
+        }
+
+    } catch (err) {
+        document.querySelector(".error").textContent = 
+            "Network error — please check your internet connection!";
     }
 });
+
 </script>
 
 
